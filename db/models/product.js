@@ -27,7 +27,7 @@ const Product = db.define('product', {
     }
   },
   category: {
-    type: Sequelize.ENUM('objet', 'sujet'),
+    type: Sequelize.ENUM('fungi', 'tea', 'capsules', 'edibles' ),
     allowNull: false
   },
   origin: {
