@@ -46,6 +46,6 @@ const startServer = () => {
 }
 
 (async () => {
-  await db.sync({force: true})
+  await db.sync()
   console.log('db synced!')
 })(startServer())

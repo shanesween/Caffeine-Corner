@@ -1,5 +1,3 @@
-'use strict';
-
 const db = require('./db')
 const {
     User,
@@ -8,18 +6,15 @@ const {
     OrderItem,
     Review
   } = require('./models');
-
-  const faker = require('faker');
+const faker = require('faker');
 
 //Create Products
 const categories = ['fungi', 'tea', 'capsules', 'edibles']
 
-const randomProductCategory = () => categories[Math.floor(Math.random() * 2)];
+const randomProductCategory = () => categories[Math.floor(Math.random() * 4)];
 
-let productCount = 100;
-
+let productCount = 999;
 const products = []
-
 while (productCount) {
     products.push({
         title: faker.commerce.productName(),
@@ -50,7 +45,7 @@ while (userCount) {
 // random num items that ramdomly choose existing user id
 const orderStatus = ['pending', 'completed']
 const randomOrderStatus = () => orderStatus[Math.floor(Math.random() * 2)]
-let orderCount = 44;
+let orderCount = 60;
 const orders = [];
 while (orderCount) {
   orders.push({
@@ -61,20 +56,22 @@ while (orderCount) {
 }
 
 //create orderItems and populate orders (total # of orders)
-let orderItems = []
+const orderItems = []
 let singleOrderItems = []
 let populateOrders = orders.length
 while (populateOrders) {
     //set amount of items on current order
-    let orderItemCount = Math.floor(Math.random() * 10) + 1;
+    let orderItemCount = Math.floor(Math.random() * 20) + 1;
 
     //push orderItem into the singleOrderItems []
     while (orderItemCount) {
+        console.log(orderItems.length);
         singleOrderItems.push({
             productId: orderItems.length + 1,
             quantity: Math.ceil(Math.random() * 9),
             price: faker.commerce.price()
         })
+
         --orderItemCount
     }
 
@@ -84,6 +81,8 @@ while (populateOrders) {
         orderItems.push(orderItem)
         ++orderIdCounter
     })
+
+    singleOrderItems = [];
     --populateOrders
 }
 
