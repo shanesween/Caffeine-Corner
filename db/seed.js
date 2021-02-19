@@ -9,9 +9,9 @@ const {
 const faker = require('faker');
 
 //Create Products
-const categories = ['fungi', 'tea', 'capsules', 'edibles']
+const categories = ['coffee', 'tea', 'energy drink', 'capsule', 'edible']
 
-const randomProductCategory = () => categories[Math.floor(Math.random() * 4)];
+const randomProductCategory = () => categories[Math.floor(Math.random() * 5)];
 
 let productCount = 999;
 const products = []
