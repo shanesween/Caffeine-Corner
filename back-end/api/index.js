@@ -1,11 +1,12 @@
-const router = require('express').Router()
+const router = require("express").Router()
 
-router.use(function (req, res, next) {
-    const err = new Error('Not found.');
-    err.status = 404;
-    next(err);
-  });
-  
-  
-  
-  module.exports = router
+router.use("/products", require("./products"))
+
+
+router.use((req, res, next) => {
+  const err = new Error("Not found.")
+  err.status = 404
+  next(err)
+})
+
+module.exports = router
