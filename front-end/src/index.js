@@ -1,17 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { Router } from 'react-router-dom'
-import App from './App'
 import history from './history'
+import App from './Components/App/App'
+import theme from './theme'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+    <CssBaseline />{' '}
     <Router history={history}>
       <App />
     </Router>
-  </React.StrictMode>,
+  </ThemeProvider>,
   document.getElementById('root'),
 )
 
