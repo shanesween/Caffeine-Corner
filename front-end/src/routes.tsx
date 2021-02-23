@@ -1,11 +1,15 @@
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
-import Landing from './Components/landing'
+import { Route, Switch } from 'react-router-dom'
+import Landing from './components/landing'
+import Products from './components/products'
 
 const Routes: React.FC = () => (
   <Switch>
     <Route exact path="/">
       <Landing />
+    </Route>
+    <Route exact path="/products">
+      <Products />
     </Route>
   </Switch>
 )

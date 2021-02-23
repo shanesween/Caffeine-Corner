@@ -24,6 +24,8 @@
     "strict": true
   },
   "include": [
-    "src"
+    "src/**/*",
+    "**/*.ts",
+    "**/*.js"
   ]
 }

@@ -1,25 +1,28 @@
-{
-    "plugins": [
+module.exports = {
+    plugins: [
         "prettier",
         "@typescript-eslint"
     ],
-    "extends": [
+    extends: [
         "airbnb-typescript",
         "react-app",
         "prettier"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "./tsconfig.json"
+    ignorePatterns: ["/*.*"],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        project: "tsconfig.json",
+        tsconfigRootDir: __dirname,
+        sourceType: "module"
     },
-    "settings": {
+    settings: {
         "import/resolver": {
             "typescript": {
                 "alwaysTryTypes": true
             }
         }
     },
-    "rules": {
+    rules: {
         "object-curly-spacing": [
             "warn",
             "always"
