@@ -7,14 +7,14 @@ import theme from './theme'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
-  <ThemeProvider theme={theme} >
+  <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-    <CssBaseline /> {' '}
-    <BrowserRouter >
+    <CssBaseline />{' '}
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </ThemeProvider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 )
 
 // If you want to start measuring performance in your app, pass a function
