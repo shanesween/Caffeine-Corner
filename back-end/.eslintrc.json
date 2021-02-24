@@ -3,15 +3,25 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["google"],
+  "extends": [
+    "google"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
-    "quotes": [1, "double", { "avoidEscape": true }],
+    "quotes": [
+      1,
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
     "space-before-function-paren": [
       "error",
       {
@@ -21,8 +31,23 @@
       }
     ],
     "new-cap": 0,
-    "object-curly-spacing": [2, "always"],
-    "semi": [2, "never"],
-    "max-len": [2, { "code": 120 }]
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "semi": [
+      2,
+      "never"
+    ],
+    "max-len": [
+      2,
+      {
+        "code": 120
+      }
+    ],
+    "indent": [
+      "error",
+      2
+    ]
   }
 }
