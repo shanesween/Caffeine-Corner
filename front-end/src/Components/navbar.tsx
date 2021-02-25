@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
+    navbar: {
+      '&.MuiPaper-root': {
+        margin: 0
+      }
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -166,7 +171,7 @@ const Navbar = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <IconButton
             edge="start"
