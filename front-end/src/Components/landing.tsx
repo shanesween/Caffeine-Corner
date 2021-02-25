@@ -51,7 +51,7 @@ const Landing: React.FC = () => {
           {categoryConfig.map(item => (
             <Grid key={item.category} item md={4} sm={4} xs={12}>
               <Paper className={classes.paper}>
-                <ButtonBase focusRipple href="/" style={{ width: '100%' }} className={classes.button}>
+                <ButtonBase focusRipple href={`products${item.category}`} style={{ width: '100%' }} className={classes.button}>
                   <Typography component="span" variant="subtitle1" color="inherit" className={classes.imageTitle}>
                     <Avatar variant="rounded" src={item.icon} />
                     {item.label}
