@@ -46,8 +46,8 @@
       }
     ],
     "indent": [
-      "error",
-      2
+      "warning",
+      4
     ]
   }
 }

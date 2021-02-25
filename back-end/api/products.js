@@ -26,11 +26,11 @@ router.get("/:productId", async (req, res, next) => {
   }
 })
 
-// Get Products based on Filter
-router.get("/filter/:filter", async (req, res, next) => {
+// Get Products based on Category
+router.get("/category/:category", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      where: { category: req.params.filter },
+      where: { category: req.params.category },
       order: [["id", "ASC"]],
     })
     res.json(products)
