@@ -48,7 +48,7 @@ while (userCount) {
 // random num items that ramdomly choose existing user id
 const orderStatus = ["pending", "completed"]
 const randomOrderStatus = () => orderStatus[Math.floor(Math.random() * 2)]
-let orderCount = 16
+let orderCount = 20
 const orders = []
 while (orderCount) {
     orders.push({

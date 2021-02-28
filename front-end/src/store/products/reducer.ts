@@ -1,8 +1,21 @@
-import { GET_PRODUCTS } from './constants'
-import { GetProductsStateType, ProductsActionTypes } from './types'
+import { GET_PRODUCTS, GET_SINGLEPRODUCT } from './constants'
+import { GetProductsStateType, GetSingleProductStateType, Product, ProductsActionTypes } from './types'
 
 const initialStateGetProducts: GetProductsStateType = {
     products: []
+}
+
+const initialStateGetSingleProduct: GetSingleProductStateType = {
+    product: {
+        id: 0,
+        title: '',
+        description: '',
+        price: 0,
+        stock: 0,
+        imageUrl: '',
+        category: 'coffee',
+        origin: '',
+    }
 }
 
 export const getProductsReducer = (
@@ -12,8 +25,20 @@ export const getProductsReducer = (
     switch (action.type) {
         case GET_PRODUCTS:
             return {
-                ...state,
                 products: action.payload
+            }
+        default: return state
+    }
+}
+
+export const getSingleProductReducer = (
+    state = initialStateGetSingleProduct,
+    action: ProductsActionTypes
+): GetSingleProductStateType => {
+    switch (action.type) {
+        case GET_SINGLEPRODUCT:
+            return {
+                product: action.payload
             }
         default: return state
     }

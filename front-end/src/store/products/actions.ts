@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from 'react'
-import { GET_PRODUCTS } from './constants'
+import { GET_PRODUCTS, GET_SINGLEPRODUCT } from './constants'
 import { Product, ProductsActionTypes } from './types'
 
 // Get All Products 
@@ -26,3 +26,20 @@ export const getProducts = (filter?: string) => async (
     }
 }
 
+// Get Single Product by ID
+export const getSingleProductAction = (
+    product: Product): ProductsActionTypes => ({
+        type: GET_SINGLEPRODUCT,
+        payload: product
+    })
+
+export const getSingleProduct = (id: number) => async (
+    dispatch: Dispatch<ProductsActionTypes>
+) => {
+    try {
+        const data = await axios.get(`http://localhost:8080/api/products/${id}`)
+        dispatch(getSingleProductAction(data.data))
+    } catch (err) {
+        console.error(err)
+    }
+}

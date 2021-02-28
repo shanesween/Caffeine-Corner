@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from './constants'
+import { GET_PRODUCTS, GET_SINGLEPRODUCT } from './constants'
 
 export interface Product {
     id: number
@@ -13,6 +13,7 @@ export interface Product {
 
 type CategoryEnum = "coffee" | "tea" | "energy drink" | "capsule" | "edible"
 
+// Get All Products
 export interface GetProductsStateType {
     products: Product[]
 }
@@ -22,4 +23,14 @@ interface GetProductsActionType {
     payload: Product[]
 }
 
-export type ProductsActionTypes = GetProductsActionType
+// Get Single Product
+export interface GetSingleProductStateType {
+    product: Product
+}
+
+interface GetSingleProductActionType {
+    type: typeof GET_SINGLEPRODUCT
+    payload: Product
+}
+
+export type ProductsActionTypes = GetProductsActionType | GetSingleProductActionType

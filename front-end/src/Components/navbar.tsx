@@ -186,6 +186,11 @@ const Navbar = () => {
               Products
             </Typography>
           </Link>
+          <Link to="/">
+            <Typography className={classes.title} variant="h6" noWrap>
+              Home
+            </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
