@@ -4,12 +4,32 @@ const app = express()
 const db = require("../db/index.js")
 const cors = require("cors")
 const PORT = process.env.PORT || 8080
+const session = require('express-session')
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const sessionStore = new SequelizeStore({ db });
+const morgan = require("morgan")
+const bodyParser = require("body-parser")
+const passport = require("passport");
+
+
+// passport registration
+passport.serializeUser((user, done) => done(null, user.id));
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.models.user.findByPk(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 
 const createApp = () => {
   // -->CORS Access<--
   app.use(cors())
+
   // -->Body parser <--//
-  const bodyParser = require("body-parser")
   app.use(bodyParser.json())
   app.use(
     bodyParser.urlencoded({
@@ -17,9 +37,25 @@ const createApp = () => {
     }),
   )
 
-  // -->Loggin middleware morgan https://github.com/expressjs/morgan  <--//
-  const morgan = require("morgan")
+  // session middleware with passport
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "my best friend is Cody",
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: true,
+      userId: undefined
+    })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // -->Logging middleware morgan https://github.com/expressjs/morgan  <--//
   app.use(morgan("dev"))
+
+  // body parsing middleware
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   // -->Serving javascript files, css files, and images from public folder<--//
   // https://expressjs.com/en/starter/static-files.html
