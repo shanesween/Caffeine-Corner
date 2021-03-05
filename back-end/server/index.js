@@ -37,7 +37,7 @@ const createApp = () => {
     }),
   )
 
-  // session middleware with passport
+  // session middleware with 
   app.use(
     session({
       secret: process.env.SESSION_SECRET || "my best friend is Cody",
