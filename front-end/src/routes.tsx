@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import AuthForm from './components/AuthForm'
 import Landing from './components/landing'
 import Products from './components/products'
 import SingleProduct from './components/singleProduct'
@@ -8,6 +9,9 @@ const Routes: React.FC = () => (
   <Switch>
     <Route exact path="/">
       <Landing />
+    </Route>
+    <Route exact path="/auth">
+      <AuthForm />
     </Route>
     <Route exact path="/products/">
       <Products />
