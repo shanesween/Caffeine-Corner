@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import axios from "axios";
 import { Dispatch } from 'react';
 import history from '../../history';
@@ -15,8 +14,8 @@ const removeUser = (): UserActionTypes => ({ type: REMOVE_USER });
 // THUNK CREATORS
 export const me = () => async (dispatch: Dispatch<UserActionTypes>) => {
     try {
-        const res = await axios.get("/auth/me");
-        dispatch(getUser(res.data || {}))
+        const res = await axios.get("http://localhost:8080/api/auth/me");
+        dispatch(getUser(res.data))
     } catch (err) {
         console.error(err)
     }
@@ -25,17 +24,20 @@ export const me = () => async (dispatch: Dispatch<UserActionTypes>) => {
 export const auth = (email: string, password: string, method: string) => async (
     dispatch: Dispatch<UserActionTypes>) => {
     let res
-    console.log("ARE WE HERE YET");
+    console.log("ARE WE HERE YET", method);
+    console.log(email);
+    console.log(password);
+
 
     try {
-        res = await axios.post(`/auth/${method}`, { email, password });
+        res = await axios.post(`http://localhost:8080/api/auth/${method}`, { email, password });
     } catch (err) {
         console.error(err)
         // return dispatch(getUser({ error: authError }));
     }
 
     try {
-        dispatch(getUser(res?.data));
+        res && dispatch(getUser(res.data));
         history.push('/')
     } catch (dispatchOrHistoryErr) {
         console.error(dispatchOrHistoryErr);
@@ -44,7 +46,7 @@ export const auth = (email: string, password: string, method: string) => async (
 
 export const logout = () => async (dispatch: Dispatch<UserActionTypes>) => {
     try {
-        await axios.post("/auth/logout");
+        await axios.post("http://localhost:8080/api/auth/logout");
         dispatch(removeUser());
         history.push("/login");
     } catch (err) {

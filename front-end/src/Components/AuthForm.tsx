@@ -1,9 +1,8 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { makeStyles, Theme, createStyles, TextField, Card } from '@material-ui/core';
 import { auth } from '../store/user/actions';
 
@@ -13,14 +12,12 @@ interface AuthProps {
 }
 
 interface RegistrationFormData {
-    formName: string
     email: string;
     password: string;
-    passwordConfirmation: string;
 }
 
 interface DispatchProps {
-    readonly Auth?: (email: string, password: string, method: string) => void
+    readonly Auth: (email: string, password: string, method: string) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,35 +35,34 @@ type Props = DispatchProps & AuthProps
 
 const AuthForm = (props: Props) => {
     const { name, displayName, Auth } = props
-    const { register, handleSubmit } = useForm<RegistrationFormData>();
+    const { register, handleSubmit, control } = useForm<RegistrationFormData>()
     const classes = useStyles()
-    console.log(name);
-    console.log(displayName);
-    console.log(Auth);
 
-
-
-    const onSubmit = React.useCallback((formValues: RegistrationFormData) => {
-        // const formName = evt.target.name;
-        // const email = evt.target.email.value;
-        // const password = evt.target.password.value;
-        Auth && Auth(formValues.email, formValues.password, formValues.formName)
-    }, [Auth])
+    const onSubmit = (formValues: RegistrationFormData) => {
+        name && Auth(formValues.email, formValues.password, name)
+    }
 
     return (
         <Card>
-
             <form
                 className={classes.root}
                 onSubmit={handleSubmit(onSubmit)}
                 name={name}
             >
-                <TextField id="outlined-basic" name="email" type="email" label="Email" variant="outlined" ref={register} />
-                <TextField id="outlined-basic" name="password" type="password" label="Password" variant="outlined" ref={register} />
-                <TextField id="outlined-basic" name="passwordConfirmation" type="password" label="Password" variant="outlined" ref={register} />
-
+                <Controller
+                    as={TextField}
+                    name="email"
+                    control={control}
+                    label="email"
+                />
+                <Controller
+                    as={TextField}
+                    name="password"
+                    control={control}
+                    label="password"
+                />
                 <div>
-                    <button type="submit">{displayName}</button>
+                    <button name="submit" type="submit">{displayName}</button>
                 </div>
                 {/* {error && error.response && <div> {error.response.data} </div>} */}
             </form>
@@ -100,16 +96,5 @@ const mapDispatch = {
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
-
-/**
- * PROP TYPES
- */
-// AuthForm.propTypes = {
-//     name: PropTypes.string.isRequired,
-//     displayName: PropTypes.string.isRequired,
-//     // handleSubmit: PropTypes.func.isRequired,
-//     // error: PropTypes.object,
-// };
-
 
 export default AuthForm
