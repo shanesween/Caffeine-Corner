@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-import { makeStyles, Theme, createStyles, TextField, Card } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, TextField, Card, Button } from '@material-ui/core';
 import { auth } from '../store/user/actions';
 
 interface AuthProps {
@@ -62,7 +62,7 @@ const AuthForm = (props: Props) => {
                     label="password"
                 />
                 <div>
-                    <button name="submit" type="submit">{displayName}</button>
+                    <Button name="submit" type="submit" variant="outlined">{displayName}</Button>
                 </div>
                 {/* {error && error.response && <div> {error.response.data} </div>} */}
             </form>
