@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { makeStyles, Theme, createStyles, TextField, Card, Button } from '@material-ui/core';
@@ -35,7 +35,7 @@ type Props = DispatchProps & AuthProps
 
 const AuthForm = (props: Props) => {
     const { name, displayName, Auth } = props
-    const { register, handleSubmit, control } = useForm<RegistrationFormData>()
+    const { handleSubmit, control } = useForm<RegistrationFormData>()
     const classes = useStyles()
 
     const onSubmit = (formValues: RegistrationFormData) => {
