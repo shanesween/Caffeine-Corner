@@ -14,8 +14,8 @@ const removeUser = (): UserActionTypes => ({ type: REMOVE_USER });
 // THUNK CREATORS
 export const me = () => async (dispatch: Dispatch<UserActionTypes>) => {
     try {
-        const res = await axios.get("http://localhost:8080/api/auth/me");
-        dispatch(getUser(res.data))
+        const { data } = await axios.get("http://localhost:8080/api/auth/me");
+        dispatch(getUser(data))
     } catch (err) {
         console.error(err)
     }
@@ -24,11 +24,6 @@ export const me = () => async (dispatch: Dispatch<UserActionTypes>) => {
 export const auth = (email: string, password: string, method: string) => async (
     dispatch: Dispatch<UserActionTypes>) => {
     let res
-    console.log("ARE WE HERE YET", method);
-    console.log(email);
-    console.log(password);
-
-
     try {
         res = await axios.post(`http://localhost:8080/api/auth/${method}`, { email, password });
     } catch (err) {

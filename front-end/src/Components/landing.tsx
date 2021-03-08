@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       fontSize: '1.5rem',
       fontWeight: 600,
+      padding: theme.spacing(1)
     }
   }),
 );

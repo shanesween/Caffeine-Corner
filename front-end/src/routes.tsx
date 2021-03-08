@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
+import Cart from './components/cart'
 import Landing from './components/landing'
 import Products from './components/products'
 import SingleProduct from './components/singleProduct'
@@ -24,6 +25,9 @@ const Routes: React.FC = () => (
     </Route>
     <Route exact path="/products/:productId">
       <SingleProduct />
+    </Route>
+    <Route exact path="/cart">
+      <Cart />
     </Route>
   </Switch>
 )

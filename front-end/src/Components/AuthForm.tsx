@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,8 +5,8 @@ import { makeStyles, Theme, createStyles, TextField, Card, Button } from '@mater
 import { auth } from '../store/user/actions';
 
 interface AuthProps {
-    name?: string,
-    displayName?: string,
+    name: string,
+    displayName: string,
 }
 
 interface RegistrationFormData {
