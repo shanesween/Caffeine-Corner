@@ -1,28 +1,18 @@
 const path = require("path")
 const express = require("express")
 const app = express()
-const db = require("../db/index.js")
+const db = require("../db")
 const cors = require("cors")
 const PORT = process.env.PORT || 8080
 const session = require('express-session')
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const SequelizeStore = require("connect-session-sequelize")(session.Store)
 const sessionStore = new SequelizeStore({ db });
 const morgan = require("morgan")
 const bodyParser = require("body-parser")
 const passport = require("passport");
 
 
-// passport registration
-passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await db.models.user.findByPk(id);
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
 
 
 const createApp = () => {
@@ -40,15 +30,29 @@ const createApp = () => {
   // session middleware with 
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || "my best friend is Cody",
+      secret: "my best friend is Cody",
       store: sessionStore,
       resave: false,
       saveUninitialized: true,
       userId: undefined
     })
-  );
-  app.use(passport.initialize());
-  app.use(passport.session());
+  )
+  app.use(passport.initialize())
+  app.use(passport.session())
+
+  passport.serializeUser((user, done) => {
+    try {
+      done(null, user.id);
+    } catch (err) {
+      done(err);
+    }
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id)
+      .then(user => done(null, user))
+      .catch(done);
+  });
 
   // -->Logging middleware morgan https://github.com/expressjs/morgan  <--//
   app.use(morgan("dev"))
@@ -88,6 +92,7 @@ const startServer = () => {
 const syncDb = () => db.sync()
 
 const bootApp = async () => {
+  await sessionStore.sync()
   await syncDb()
   await createApp()
   await startServer()

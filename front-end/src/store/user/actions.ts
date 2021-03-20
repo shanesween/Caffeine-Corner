@@ -26,16 +26,10 @@ export const auth = (email: string, password: string, method: string) => async (
     let res
     try {
         res = await axios.post(`http://localhost:8080/api/auth/${method}`, { email, password });
+        res && dispatch(getUser(res.data));
+        localStorage.setItem('user', res.data)
     } catch (err) {
         console.error(err)
-        // return dispatch(getUser({ error: authError }));
-    }
-
-    try {
-        res && dispatch(getUser(res.data));
-        history.push('/')
-    } catch (dispatchOrHistoryErr) {
-        console.error(dispatchOrHistoryErr);
     }
 };
 
@@ -43,7 +37,7 @@ export const logout = () => async (dispatch: Dispatch<UserActionTypes>) => {
     try {
         await axios.post("http://localhost:8080/api/auth/logout");
         dispatch(removeUser());
-        history.push("/login");
+        localStorage.removeItem("user")
     } catch (err) {
         console.error(err);
     }

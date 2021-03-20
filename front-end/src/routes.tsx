@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
 import Cart from './components/cart'
 import Landing from './components/landing'
@@ -32,4 +32,4 @@ const Routes: React.FC = () => (
   </Switch>
 )
 
-export default Routes
+export default withRouter(Routes)

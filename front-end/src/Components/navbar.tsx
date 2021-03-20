@@ -15,6 +15,9 @@ import MailIcon from '@material-ui/icons/Mail'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Link, Route, Switch } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Button } from '@material-ui/core'
+import { AppState } from '../store'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +94,7 @@ const Navbar = () => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null)
+  const user = useSelector((state: AppState) => state.user)
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -124,7 +128,7 @@ const Navbar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
     </Menu>
   )
 
@@ -206,26 +210,36 @@ const Navbar = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            </IconButton> */}
+            {/* <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            </IconButton> */}
+            {
+              user.email ? (
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              ) : (
+                <Link to="/auth/login">
+                  <Button>
+                    Log In/Sign Up
+                </Button>
+                </Link>
+              )
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

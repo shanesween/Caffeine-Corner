@@ -1,8 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-import { makeStyles, Theme, createStyles, TextField, Card, Button } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, TextField, Card, Button, Typography } from '@material-ui/core';
 import { auth } from '../store/user/actions';
+import { AppState } from '../store';
 
 interface AuthProps {
     name: string,
@@ -35,6 +36,7 @@ const AuthForm = (props: Props) => {
     const { name, displayName, Auth } = props
     const { handleSubmit, control } = useForm<RegistrationFormData>()
     const classes = useStyles()
+    const user = useSelector((state: AppState) => state.user)
 
     const onSubmit = (formValues: RegistrationFormData) => {
         name && Auth(formValues.email, formValues.password, name)
@@ -42,31 +44,42 @@ const AuthForm = (props: Props) => {
 
     return (
         <Card>
-            <form
-                className={classes.root}
-                onSubmit={handleSubmit(onSubmit)}
-                name={name}
-            >
-                <Controller
-                    as={TextField}
-                    name="email"
-                    control={control}
-                    label="email"
-                />
-                <Controller
-                    as={TextField}
-                    name="password"
-                    control={control}
-                    label="password"
-                />
-                <div>
-                    <Button name="submit" type="submit" variant="outlined">{displayName}</Button>
-                </div>
-                {/* {error && error.response && <div> {error.response.data} </div>} */}
-            </form>
-            <div className="ml-3">
-                <a href="/auth/google">{displayName} with Google</a>
-            </div>
+            {user.email ? (
+                <Typography variant="h6" gutterBottom>
+                    h6. Heading
+                </Typography>
+            ) : (
+                <>
+                    <form
+                        className={classes.root}
+                        onSubmit={handleSubmit(onSubmit)}
+                        name={name}
+                    >
+                        <Controller
+                            as={TextField}
+                            name="email"
+                            control={control}
+                            label="email"
+                            defaultValue=""
+                        />
+                        <Controller
+                            as={TextField}
+                            name="password"
+                            control={control}
+                            label="password"
+                            defaultValue=""
+                        />
+                        <div>
+                            <Button name="submit" type="submit" variant="outlined">{displayName}</Button>
+                        </div>
+                        {/* {error && error.response && <div> {error.response.data} </div>} */}
+                    </form>
+                    <div className="ml-3">
+                        <a href="/auth/google">{displayName} with Google</a>
+                    </div>
+                </>
+            )
+            }
         </Card>
     );
 };
