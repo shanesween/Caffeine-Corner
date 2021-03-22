@@ -18,3 +18,15 @@ export const fetchCart = () => async (dispatch: Dispatch<CartActionTypes>) => {
 
     }
 }
+
+export const addProduct = (productId: number, quantity: number) => async (dispatch: Dispatch<CartActionTypes>) => {
+    try {
+        const { data } = await axios.put(`/api/cart/addItem`, {
+            productId,
+            quantity
+        });
+        dispatch(setCart(data));
+    } catch (err) {
+        console.error("Error in addProduct thunk", err);
+    }
+}
