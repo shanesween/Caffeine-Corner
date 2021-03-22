@@ -1,9 +1,10 @@
-import { makeStyles, Theme, createStyles, Grid, Paper, ButtonBase, Typography, Box } from '@material-ui/core'
+import { makeStyles, Theme, createStyles, Grid, Paper, ButtonBase, Typography, Box, } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link, Route, Switch } from 'react-router-dom'
 import { AppState } from '../store'
 import { getProducts } from '../store/products/actions'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,40 +52,42 @@ const Products: React.FC = () => {
       <Grid container spacing={4}>
         {products.map(item => (
           <Grid item md={4} sm={6} xs={12} key={item.title}>
-            <ButtonBase href={`/products/${item.id}`}>
-              <Paper className={classes.paper}>
-                <Grid container spacing={2}>
-                  <Grid item>
-                    <Box className={classes.image}>
-                      <img className={classes.img} alt="complex" src={item.imageUrl} />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        <Typography gutterBottom variant="subtitle1">
-                          {item.title}
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                          {item.category}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {item.origin}
-                        </Typography>
+            <Link to={`/products/${item.id}`} >
+              <ButtonBase href={`/products/${item.id}`}>
+                <Paper className={classes.paper}>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <Box className={classes.image}>
+                        <img className={classes.img} alt="complex" src={item.imageUrl} />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                      <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                          <Typography gutterBottom variant="subtitle1">
+                            {item.title}
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            {item.category}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            {item.origin}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                            Remove
+                </Typography>
+                        </Grid>
                       </Grid>
                       <Grid item>
-                        <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                          Remove
-                </Typography>
+                        <Typography variant="subtitle1">{item.price}</Typography>
                       </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1">{item.price}</Typography>
-                    </Grid>
                   </Grid>
-                </Grid>
-              </Paper>
-            </ButtonBase>
+                </Paper>
+              </ButtonBase>
+            </Link>
           </Grid>
         ))}
       </Grid>

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography, CardActions, Collapse } from '@material-ui/core';
+import { Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography, CardActions, Collapse, Button } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -9,8 +8,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { getSingleProduct } from '../store/products/actions';
 import { AppState } from '../store';
+import { addProduct } from '../store/cart/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,21 +34,30 @@ const useStyles = makeStyles((theme: Theme) =>
         avatar: {
             backgroundColor: theme.palette.secondary.main
         },
+        button: {
+            margin: theme.spacing(1),
+        },
     }),
 );
-
 
 const SingleProduct: React.FC = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
-
+    const product = useSelector((state: AppState) => state.product.product)
+    const [quantity, setQuantity] = React.useState(1)
+    const cart = useSelector((state: AppState) => state.cart)
+    const user = useSelector((state: AppState) => state.user)
+    console.log("CART HERE", cart)
+    console.log("User HERE", user)
     useEffect(() => {
         dispatch(getSingleProduct(Number(location.pathname.split('/')[2])))
     }, [dispatch, location.pathname])
 
-    const product = useSelector((state: AppState) => state.product.product)
+    const addToCart = () => {
+        dispatch(addProduct(product.id, quantity));
+    };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -84,6 +94,15 @@ const SingleProduct: React.FC = () => {
                     <Typography paragraph>
                         Origin: {product.origin}
                     </Typography>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={addToCart}
+                    >
+                        Add to cart
+                    </Button>
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">

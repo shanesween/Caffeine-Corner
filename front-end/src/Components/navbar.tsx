@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert'
 import { Link, Route, Switch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Button } from '@material-ui/core'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { AppState } from '../store'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -222,16 +223,30 @@ const Navbar = () => {
             </IconButton> */}
             {
               user.email ? (
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                <>
+                  <Link to="/cart">
+                    <IconButton
+                      edge="end"
+                      aria-label="account of current user"
+                      aria-controls={menuId}
+                      aria-haspopup="true"
+                      // onClick={handleProfileMenuOpen}
+                      color="inherit"
+                    >
+                      <ShoppingCartIcon />
+                    </IconButton>
+                  </Link>
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </>
               ) : (
                 <Link to="/auth/login">
                   <Button>
