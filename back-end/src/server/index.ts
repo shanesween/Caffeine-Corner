@@ -1,58 +1,50 @@
-const path = require("path")
-const express = require("express")
+import path from "path"
+import express from "express"
+import db from "../db"
+import cors from "cors"
+import session from "express-session"
+import morgan from "morgan"
+import passport from "passport"
+import connect from "connect-session-sequelize"
+
 const app = express()
-const db = require("../db")
-const cors = require("cors")
 const PORT = process.env.PORT || 8080
-const session = require('express-session')
-const SequelizeStore = require("connect-session-sequelize")(session.Store)
+const SequelizeStore = connect(session.Store)
 const sessionStore = new SequelizeStore({ db });
-const morgan = require("morgan")
-const bodyParser = require("body-parser")
-const passport = require("passport");
-
-
-
 
 
 const createApp = () => {
   // -->CORS Access<--
   app.use(cors())
 
-  // -->Body parser <--//
-  app.use(bodyParser.json())
-  app.use(
-    bodyParser.urlencoded({
-      extended: true,
-    }),
-  )
-
-  // session middleware with 
+  // session middleware
   app.use(
     session({
-      secret: "my best friend is Cody",
+      secret: "secrets",
       store: sessionStore,
       resave: false,
       saveUninitialized: true,
-      userId: undefined
     })
   )
   app.use(passport.initialize())
   app.use(passport.session())
 
-  passport.serializeUser((user, done) => {
-    try {
-      done(null, user.id);
-    } catch (err) {
-      done(err);
-    }
-  });
+  // TODO: Add passport functionality
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .then(user => done(null, user))
-      .catch(done);
-  });
+  // passport.serializeUser((user, done) => {
+  //   try {
+  //     done(null, user.id);
+  //   } catch (err) {
+  //     done(err);
+  //   }
+  // });
+
+  // passport.deserializeUser((id, done) => {
+  //   User.findById(id)
+  //     .then(user => done(null, user))
+  //     .catch(done);
+  // });
+
 
   // -->Logging middleware morgan https://github.com/expressjs/morgan  <--//
   app.use(morgan("dev"))
@@ -75,18 +67,19 @@ const createApp = () => {
   app.get("*", function (req, res, next) {
     res.sendFile(path.join(__dirname, "../public/index.html"))
   })
-  app.use(function (err, req, res, next) {
-    console.error(err)
-    console.error(err.stack)
-    res.status(err.status || 500).send(err.message || "Internal server error.")
-  })
+
 }
 
 // -->Starting server<-- //
 const startServer = () => {
-  app.listen(process.env.PORT || PORT, () =>
-    console.log(`Listening on ${PORT}`),
-  )
+  try {
+
+    app.listen(process.env.PORT || PORT, () =>
+      console.log(`Listening on ${PORT}`),
+    )
+  } catch (err) {
+    console.error(`Error occured: ${err}`)
+  }
 }
 
 const syncDb = () => db.sync()
